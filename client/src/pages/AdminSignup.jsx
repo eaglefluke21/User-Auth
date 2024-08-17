@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import CryptoJS from 'crypto-js';
 import cryptoEncrypt from "../utils/cyptoEncrypt.jsx";
 import Popup from "../components/Popup.jsx";
+import apiAxios from "../services/api.js";
 
 
 function AdminSignup() {
@@ -20,6 +21,15 @@ function AdminSignup() {
         role: 'admin',
     })
 
+    const resetForm = () => {
+        setFormdata({
+            username:'',
+            email:'',
+            password:'',
+            role: '',
+        })
+    };
+
     const handleChange = (e) => {
 
         setFormdata({
@@ -32,28 +42,25 @@ function AdminSignup() {
 
         e.preventDefault();
 
+
+
+
+
+
+
        
 
         try{
             const cryptoKey = await cryptoEncrypt();
 
-            const backendurl = 'http://localhost:3000';
-            const url = `${backendurl}/users/adminregister`;
-
             const encryptedPassword = CryptoJS.AES.encrypt(Formdata.password,cryptoKey).toString();
 
-            const responsestore = await fetch(url,{
-                method:'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({...Formdata,password: encryptedPassword}),
-            });
+            const data = {...Formdata,password: encryptedPassword}
 
-            const responsejson = await responsestore.json();
-            console.log(responsejson);
+            const response = await apiAxios.post(`/users/adminregister`,data);
 
-            if(responsestore.status === 201) {
+            if(response.status === 201) {
+                resetForm();
                 setPopupVisible(true);                
             } else {
                 console.error('User creation failed:', error);

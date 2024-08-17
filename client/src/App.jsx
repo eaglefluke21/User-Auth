@@ -10,7 +10,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 
 
-const AccessWithRole = userRole(Access, [ 'admin']);  
+const AccessWithRole = userRole(Access, ['admin']);  
 
  function App() {
 

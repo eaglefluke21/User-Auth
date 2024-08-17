@@ -33,7 +33,33 @@ export async function cryptoEncryption(req,res) {
 }
 
 
+export async function checkrole(req,res)  {
+    res.json({ message: 'User Role ', user: req.user });
+}
 
+
+export async function checklogstatus(req,res){
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.json({ isLoggedIn: false });
+      }
+
+      jwt.verify(token, jwtsecret, (err, decoded) => {
+        if (err) {
+          return res.json({ isLoggedIn: false });
+        }
+    
+        
+        res.json({ isLoggedIn: true });
+      });
+
+}
+
+export async function userlogout(req,res){
+    res.clearCookie('token');
+  res.json({ isLoggedIn: false });
+}
 
 // logic fo Login
 export async function userLogin(req,res) {
@@ -73,8 +99,26 @@ export async function userLogin(req,res) {
                 return res.status(500).json({msg:"Error generating token"});
             }
 
-            res.status(201).json({"jwt": token , msg : "jwt created!"})
-            console.log("logged In succesfully");
+            const isDevelopment = process.env.NODE_ENV === 'development';
+            const isProduction = process.env.NODE_ENV === 'production';
+
+            console.log("check mode", isDevelopment);
+
+            console.log("check mode", isProduction);
+
+            const oneDay = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+            res.cookie('token', token, {
+                httpOnly: true,
+                expires: oneDay,
+                // secure: true,
+                
+            });
+
+          
+
+            res.status(202).json({ msg: "Logged in successfully!" });
+            console.log("Logged in successfully");
         }
     );
 

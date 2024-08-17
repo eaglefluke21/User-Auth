@@ -9,6 +9,10 @@ import { cryptoEncryption } from "../controllers/userController.js";
 import RoleCheck from "../middleware/roleCheck.js";
 import { forgotPassword } from "../controllers/userController.js";
 import { resetPassword } from "../controllers/userController.js";
+import authenticateJWT from "../middleware/authenticateJWT.js";
+import { checkrole } from "../controllers/userController.js";
+import { checklogstatus } from "../controllers/userController.js";
+import { userlogout } from "../controllers/userController.js";
 
 function userRoutes () {
     const router = Router();
@@ -28,7 +32,12 @@ function userRoutes () {
     router.post('/forgot-password',forgotPassword);
 
     router.post('/reset-password/:token', resetPassword);
+
+    router.get('/api/protected', authenticateJWT,checkrole);
     
+    router.get('/checkstatus', checklogstatus);
+
+    router.post('/logout', userlogout);
 
     return router;
 };

@@ -3,20 +3,33 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import close from "../assets/close.svg"
 import { useEffect } from "react";
+import apiAxios from "../services/api";
 
 const NavLinks = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Initial login state
+    const [isLoggedIn, setIsLoggedIn] = useState(false); 
+
+    const checklogstatus = async() => {
+
+        const response = await apiAxios.get(`/users/checkstatus`);
+
+        setIsLoggedIn(response.data.isLoggedIn);
+
+    }
 
     useEffect(() => {
-      const jwtToken = sessionStorage.getItem('jwToken');
-      setIsLoggedIn(!!jwtToken); // Set login state based on token existence
-    }, []); // Run only once on component mount
-  
-    const handleLogout = () => {
-      sessionStorage.removeItem('jwToken');
-      setIsLoggedIn(false); // Update state for immediate UI change
-    };
+        checklogstatus(); 
+      }, []);
+    
+      const handleLogout = async () => {
+        try {
+          await apiAxios.post('/users/logout');
+          
+          setIsLoggedIn(false);
+        } catch (error) {
+          console.error('Logout failed:', error);
+        }
+      };
 
 
     return (

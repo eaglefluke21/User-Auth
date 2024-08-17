@@ -1,20 +1,23 @@
-import {jwtDecode} from 'jwt-decode';
+import apiAxios from '../services/api';
 
-const getRoleFromToken = () => {
-const token = sessionStorage.getItem('jwToken');
-if (!token) return 'guest';
+const getRoleFromToken = async() => {
 
 try {
-    const decoded = jwtDecode(token);
-    console.log('check for decoded:', decoded);
-    console.log('check for decoded token:', decoded.user.role);
-    return decoded.user.role;
-   
+    const response = await apiAxios.get(`/users/api/protected`);
+
+        console.log("data", response.data);
+        const role  = response.data.user.user.role;
+        console.log('User role:', role);
+        return role;
 
 } catch(error) {
-    console.error('Invalid token:',error);
-    return null;
-}
+    console.error('Error fetching user role:', error);
+        return 'guest';
+   
+};
+
+
+
 };
 
 export default getRoleFromToken;

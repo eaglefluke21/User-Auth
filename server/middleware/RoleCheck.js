@@ -13,7 +13,7 @@ const RoleCheck = (roles = []) => {
  return (req,res,next) => {
     
     const authHeader = req.headers.authorization;
-    console.log('Authorization Header:', authHeader); // Log the header for debugging
+    console.log('Authorization Header:', authHeader); 
 
     if (!authHeader) {
       return res.status(401).send({ message: 'Access denied. No Auth Header.' });

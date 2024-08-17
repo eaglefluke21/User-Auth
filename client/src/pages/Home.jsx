@@ -2,26 +2,30 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import getRoleFromToken from "../utils/getRoleFromToken";
 
 function Home() {
 
     const navigate = useNavigate();
 
-    useEffect( ( )=> {
-        if(!sessionStorage.getItem('jwToken')){
-            navigate('/')
-        }
-        
+    useEffect(() => {
+        const fetchAndNavigate = async () => {
+            const role = await getRoleFromToken();
+            if (role === 'user' || role === 'admin') {
+                console.log("Welcome");
+            }
+            else {
+                navigate('/');
+            }
+        };
 
-    } , []);
+        fetchAndNavigate();
+    }, [navigate]);
 
 
-    const handlelogout = () => {
+    
 
-        sessionStorage.removeItem('jwToken');
-        
-    }
+   
 
     return (
         <div className="flex flex-col min-h-screen ">

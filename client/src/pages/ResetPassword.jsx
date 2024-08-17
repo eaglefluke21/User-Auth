@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Popup from "../components/Popup";
 import ResetPasswordImage from "../assets/login.jpg"
+import apiAxios from "../services/api";
 
 const ResetPassword = () => {
     const {token} = useParams();
@@ -18,16 +19,10 @@ const ResetPassword = () => {
 
         try{
 
-            const backendurl = 'http://localhost:3000';
-            const url = `${backendurl}/users/reset-password/${token}`;
-            const response = await fetch (url,{
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({password}),
-            });
 
-            const responseData = await response.json();
-            console.log(responseData);
+            const data = {password}
+
+            const response = await apiAxios.post(`/users/reset-password/${token}`,data);
 
             if(response.status === 201) {
                 setPopupVisible(true);                

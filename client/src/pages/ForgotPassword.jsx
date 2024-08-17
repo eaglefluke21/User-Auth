@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ForgotPasswordImage from "../assets/login.jpg";
 import Popup from "../components/Popup";
+import apiAxios from "../services/api";
 
 const ForgotPassword = () => {
 
@@ -15,17 +16,9 @@ const ForgotPassword = () => {
 
         try{
 
-            const backendurl = 'http://localhost:3000';
-            const url = `${backendurl}/users/forgot-password`;
+            const data = {email}
 
-            const response = await fetch (url,{
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({email}),
-            });
-
-            const responseData = await response.json();
-            console.log(responseData);
+            const response = await apiAxios.post(`/users/forgot-password`,data);
 
             if(response.status === 201) {
                 setPopupVisible(true);                

@@ -2,13 +2,12 @@ import React ,{ useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import LoginImage from "../assets/login.jpg";
-import Google from "../assets/google.svg";
-import Github from "../assets/github.svg";
 import { NavLink } from "react-router-dom";
 import CryptoJS from "crypto-js";
 import cryptoEncrypt from "../utils/cyptoEncrypt";
 import { useNavigate } from "react-router-dom";
 import Popup from "../components/Popup.jsx";
+import apiAxios from "../services/api.js";
 
 
 
@@ -36,36 +35,19 @@ function Login() {
 
         e.preventDefault();
 
-        
-
-      
-
 
 
         try{
             const cryptoKey = await cryptoEncrypt();
 
-            const backendurl = 'http://localhost:3000';
-            const url = `${backendurl}/users/login`;
-
             const encryptedPassword = CryptoJS.AES.encrypt(Formdata.password,cryptoKey).toString();
 
-            const responsestore = await fetch(url,{
-                method:'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    
-                },
-                body: JSON.stringify({...Formdata,password: encryptedPassword}),
-            });
+            const data = {...Formdata,password: encryptedPassword}
 
-            const responsejson = await responsestore.json();
-            console.log("checking response",responsejson);
+            const response = await apiAxios.post(`/users/login`,data);
+            console.log("checking response",response);
 
-            if(responsestore.status === 201) {
-
-                const token = responsejson.jwt;
-                sessionStorage.setItem('jwToken',token);
+            if(response.status === 202) {
                 
                 console.log("navigating to home page");
                 navigate('/home');
