@@ -106,7 +106,8 @@ export async function userLogin(req,res) {
                 httpOnly: true,
                 expires: oneDay,
                 secure: true,
-                
+                sameSite: 'None',
+                path: '/'  
             });
 
           
