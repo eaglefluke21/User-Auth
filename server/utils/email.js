@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const EMAIL = process.env.EMAIL;
-const frontendurl = 'http://localhost:5173';
+const frontendurl = 'https://user-auth-mu-ten.vercel.app';
 
 
 export const sendResetEmail = (email,token) => {

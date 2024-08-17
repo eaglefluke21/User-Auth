@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'http://localhost:5173', 
+  origin: 'https://user-auth-mu-ten.vercel.app', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true 
@@ -33,5 +33,5 @@ app.use('/users',userRoutes());
 
 
 app.listen(port , function(){
-    console.log(`server is listening at http://localhost:${port}`);
+    console.log(`server is listening at https://user-auth-backend-three.vercel.app`);
 });
