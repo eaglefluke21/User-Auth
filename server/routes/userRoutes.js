@@ -6,7 +6,7 @@ import { userLogin } from "../controllers/userController.js";
 import { checkenv } from "../controllers/userController.js";
 import { checkreq } from "../controllers/userController.js";
 import { cryptoEncryption } from "../controllers/userController.js";
-import RoleCheck from "../middleware/roleCheck.js";
+import RoleCheck from "../middleware/RoleCheck.js";
 import { forgotPassword } from "../controllers/userController.js";
 import { resetPassword } from "../controllers/userController.js";
 import authenticateJWT from "../middleware/authenticateJWT.js";
