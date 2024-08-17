@@ -1,4 +1,8 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const jwtsecret = process.env.JWT_SECRET;
 
 const authenticateJWT = (req, res, next) => {
     
@@ -12,7 +16,7 @@ const authenticateJWT = (req, res, next) => {
       return res.sendStatus(403); 
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(token, jwtsecret, (err, user) => {
       if (err) {
         console.log('token value verify', token);
           return res.sendStatus(403);
