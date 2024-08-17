@@ -99,12 +99,6 @@ export async function userLogin(req,res) {
                 return res.status(500).json({msg:"Error generating token"});
             }
 
-            const isDevelopment = process.env.NODE_ENV === 'development';
-            const isProduction = process.env.NODE_ENV === 'production';
-
-            console.log("check mode", isDevelopment);
-
-            console.log("check mode", isProduction);
 
             const oneDay = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
