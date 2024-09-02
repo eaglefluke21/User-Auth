@@ -48,8 +48,7 @@ export async function checklogstatus(req,res){
       jwt.verify(token, jwtsecret, (err, decoded) => {
         if (err) {
           return res.json({ isLoggedIn: false });
-        }
-    
+        } 
         
         res.json({ isLoggedIn: true });
       });

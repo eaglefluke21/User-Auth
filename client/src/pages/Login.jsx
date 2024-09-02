@@ -8,15 +8,35 @@ import cryptoEncrypt from "../utils/cyptoEncrypt";
 import { useNavigate } from "react-router-dom";
 import Popup from "../components/Popup.jsx";
 import apiAxios from "../services/api.js";
+import { useEffect } from "react";
 
 
 
 function Login() {
 
 
+    const navigate = useNavigate();
+
+    const checklogstatus = async() => {
+
+        const response = await apiAxios.get(`/users/checkstatus`);
+
+        console.log("status",response.data.isLoggedIn);
+
+        if(response.data.isLoggedIn === true){
+
+            navigate('/home');
+        }
+
+    };
+
+    useEffect(() => {
+        checklogstatus(); 
+      }, [navigate]);
+
+
     const[isPopupVisible , setPopupVisible] = useState(false);
 
-    const navigate = useNavigate();
     
     const [Formdata, setFormdata] = useState({
         email:'',
