@@ -3,8 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const reactUrl = process.env.REACT_URL;
 const EMAIL = process.env.EMAIL;
-const frontendurl = 'https://user-auth-mu-ten.vercel.app';
+const frontendurl = `${reactUrl}`;
 
 
 export const sendResetEmail = (email,token) => {

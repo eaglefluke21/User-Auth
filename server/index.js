@@ -6,7 +6,11 @@ import cookieParser from 'cookie-parser';
 
 
 dotenv.config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
+
+const reactUrl = process.env.REACT_URL;
+
+
 
 const app = express();
 app.use(cookieParser());
@@ -14,11 +18,12 @@ app.use(cookieParser());
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'https://user-auth-mu-ten.vercel.app', 
+  origin: `${reactUrl}`, 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true 
 };
+
 app.use(cors(corsOptions));
 
 app.options('*', cors(corsOptions));
@@ -33,5 +38,5 @@ app.use('/users',userRoutes());
 
 
 app.listen(port , function(){
-    console.log(`server is listening at https://user-auth-backend-three.vercel.app`);
+  console.log(`server is listening at http://localhost:${port}`);
 });

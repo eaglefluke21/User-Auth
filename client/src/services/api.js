@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
+
 const apiAxios = axios.create({
-    baseURL:'https://user-auth-backend-three.vercel.app',
+    baseURL:`${apiUrl}`,
     withCredentials: true, 
 });
 
